@@ -31,7 +31,7 @@ public class User : BaseModel
     [Required]
     [Column("user_role")]
     [MaxLength(50)]
-    public UserRole UserRole { get; set; } = UserRole.User;
+    public UserRole UserRole { get; set; } = UserRole.Learner;
 
     public void GenerateId()
     {

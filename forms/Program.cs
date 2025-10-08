@@ -1,4 +1,5 @@
 using forms.Data;
+using forms.Utils;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // MongoDB - Atlas
 builder.Services.AddSingleton(new MongoDbContext(builder.Configuration));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddRepositories();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -26,6 +39,7 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = "docs";
     });
 }
+
 app.UseCors("AllowAll");
 app.MapControllers();
 app.Run();

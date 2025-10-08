@@ -12,15 +12,19 @@ public class FormResponse
     [Column("id")]
     public long Id { get; set; }
 
-    // Mongo Form _id as string (24-hex). If you use GUIDs, adjust length.
+    // Mongo Form _id as string (24-hex).
     [Required]
     [MaxLength(24)]
     [Column("form_id")]
     public string FormId { get; set; } = string.Empty;
 
-    [Required] [Column("user_id")] public long UserId { get; set; }
+    [Required] 
+    [Column("user_id")] 
+    public long UserId { get; set; }
 
-    [Required] [Column("submitted_at")] public DateTime SubmittedAt { get; set; }
+    [Required] 
+    [Column("submitted_at")] 
+    public DateTime SubmittedAt { get; set; }
 
     [Required]
     [Column("answers", TypeName = "json")]
