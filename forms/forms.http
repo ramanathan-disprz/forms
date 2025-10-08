@@ -1,6 +1,3 @@
 @forms_HostAddress = http://localhost:5237
 
-GET {{forms_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
