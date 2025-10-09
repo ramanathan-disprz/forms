@@ -1,4 +1,8 @@
 using forms.Data;
+using forms.Dto;
+using forms.GraphQL.Mutations;
+using forms.GraphQL.Queries;
+using forms.Mapping;
 using forms.Utils;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,8 +27,16 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddRepositories();
+builder.Services.AddServices();
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<UserQuery>()       // now Query has real fields
+    .AddMutationType<UserMutation>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -42,4 +54,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 app.MapControllers();
+app.MapGraphQL("/graphql");
 app.Run();
