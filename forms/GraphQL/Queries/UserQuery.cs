@@ -4,27 +4,29 @@ using forms.Service.Interface;
 
 namespace forms.GraphQL.Queries;
 
+[ExtendObjectType(typeof(Query))]
 public class UserQuery
 {
     private readonly IMapper _mapper;
     private readonly IUserService _service;
-    private readonly ILogger<UserQuery> _logger;
 
-    public UserQuery(IMapper mapper, IUserService service, ILogger<UserQuery> logger)
+    public UserQuery(IMapper mapper, IUserService service)
     {
         _mapper = mapper;
         _service = service;
-        _logger = logger;
     }
 
     public string Hello() => "Hello Ram!";
 
     public IEnumerable<UserDto> IndexUser()
     {
-        _logger.LogInformation("Find all users");
         var users = _service.Index();
         return _mapper.Map<IEnumerable<UserDto>>(users);
     }
-    
-    
+
+    public UserDto FetchUser(long id)
+    {
+        var user = _service.Fetch(id);
+        return _mapper.Map<UserDto>(user);
+    }
 }

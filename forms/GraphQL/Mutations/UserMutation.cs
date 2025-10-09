@@ -17,14 +17,17 @@ public class UserMutation
         _service = service;
     }
 
+    [GraphQLName("updateUser")]
     public UserDto UpdateUser(long id, UserRequest request)
     {
         var user = _service.Update(id, request);
         return _mapper.Map<UserDto>(user);
     }
 
-    public void DeleteUser(long id)
+    [GraphQLName("deleteUser")]
+    public Boolean DeleteUser(long id)
     {
         _service.Delete(id);
+        return  true;
     }
 }

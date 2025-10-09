@@ -7,13 +7,15 @@ public static class QueryCollection
 {
     public static IRequestExecutorBuilder AddQueries(this IRequestExecutorBuilder builder)
     {
-        // Register query as SCOPED service first
+        // Register services
         builder.Services.AddScoped<UserQuery>();
-        
-        
-        // Then add as query type
-        builder.AddQueryType<UserQuery>();
-        
+
+        // Add root mutation type
+        builder.AddQueryType<Query>();
+
+        // Add extensions
+        builder.AddTypeExtension<UserQuery>();
+
         return builder;
     }
 }
