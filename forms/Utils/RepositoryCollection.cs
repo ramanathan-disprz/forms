@@ -4,7 +4,6 @@ using forms.Repository.Interfaces;
 
 namespace forms.Utils;
 
-[ExcludeFromCodeCoverage]
 public static class RepositoryCollection
 {
     public static IServiceCollection AddRepositories(this IServiceCollection repositories)

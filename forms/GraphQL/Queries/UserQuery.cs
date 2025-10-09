@@ -1,3 +1,4 @@
+using AutoMapper;
 using forms.Dto;
 using forms.Service.Interface;
 
@@ -5,15 +6,25 @@ namespace forms.GraphQL.Queries;
 
 public class UserQuery
 {
-    private readonly IUserService _userService;
+    private readonly IMapper _mapper;
+    private readonly IUserService _service;
+    private readonly ILogger<UserQuery> _logger;
 
-    public UserQuery(IUserService userService)
+    public UserQuery(IMapper mapper, IUserService service, ILogger<UserQuery> logger)
     {
-        _userService = userService;
+        _mapper = mapper;
+        _service = service;
+        _logger = logger;
     }
 
-    public UserDto GetUserById(long id)
+    public string Hello() => "Hello Ram!";
+
+    public IEnumerable<UserDto> IndexUser()
     {
-        return new UserDto();
+        _logger.LogInformation("Find all users");
+        var users = _service.Index();
+        return _mapper.Map<IEnumerable<UserDto>>(users);
     }
+    
+    
 }

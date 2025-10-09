@@ -5,6 +5,11 @@ namespace forms.Service.Interface;
 
 public interface IUserService
 {
-    User Create(UserRequest request);
-    
+    IEnumerable<User> Index();
+
+    User Fetch(long id);
+
+    User Update(long id, UserRequest request);
+
+    void Delete(long id);
 }

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using AutoMapper;
-using forms.Exception;
 using forms.Model;
 using forms.Repository.Interfaces;
 using forms.Request;
@@ -21,19 +20,31 @@ public class UserService : IUserService
         _repository = repository;
     }
 
-    public User Create(UserRequest request)
+    public IEnumerable<User> Index()
     {
-        _log.LogInformation("Create new user : {userRequest}", JsonSerializer.Serialize(request));
-        ValidateEmail(request.Email);
-        var user = _mapper.Map<User>(request);
-        user.GenerateId();
-        return _repository.Create(user);
+        _log.LogInformation("Find all users");
+        return _repository.FindAll();
     }
 
-    private void ValidateEmail(string? email)
+    public User Fetch(long id)
     {
-        var existsByEmail = _repository.ExistsByEmail(email);
-        if (existsByEmail)
-            throw new ConflictException($"User with email : {email} already exists");
+        _log.LogInformation("Find user with id : {userId}", id);
+        return _repository.FindOrThrow(id);
+    }
+
+    public User Update(long id, UserRequest request)
+    {
+        _log.LogInformation("Updating user with id: {UserId} " +
+                            "and request: {userRequest}", id, JsonSerializer.Serialize(request));
+        var user = Fetch(id);
+        user = _mapper.Map(request, user);
+        return _repository.Update(user);
+    }
+
+    public void Delete(long id)
+    {
+        _log.LogInformation("Delete user with id : {userId}", id);
+        var user = Fetch(id);
+        _repository.Delete(user);
     }
 }

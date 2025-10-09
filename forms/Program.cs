@@ -1,21 +1,39 @@
 using forms.Data;
-using forms.Dto;
-using forms.GraphQL.Mutations;
-using forms.GraphQL.Queries;
+using forms.GraphQL;
 using forms.Mapping;
 using forms.Utils;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// EF-Core  MySQL
+// ===== Data Layer =====
+// EF Core - MySQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))));
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    ));
 
-// MongoDB - Atlas
+// MongoDB Atlas
 builder.Services.AddSingleton(new MongoDbContext(builder.Configuration));
 
+// ===== Service Layer =====
+// Register Repositories and Services
+builder.Services.AddRepositories();
+builder.Services.AddServices();
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+// ===== GraphQL Configuration =====
+builder.Services
+    .AddGraphQLServer()
+    .AddQueries() // All GraphQL queries
+    .AddMutations() // All GraphQL mutations
+    .AddErrorFilter<GraphQLErrorFilter>()
+    .ModifyRequestOptions(o => { o.IncludeExceptionDetails = false; });
+
+// ===== CORS =====
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -26,33 +44,11 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddRepositories();
-builder.Services.AddServices();
-
-builder.Services.AddControllers();
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-builder.Services
-    .AddGraphQLServer()
-    .AddQueryType<UserQuery>()       // now Query has real fields
-    .AddMutationType<UserMutation>();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// ===== Build App =====
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
-        c.RoutePrefix = "docs";
-    });
-}
-
+// ===== Middleware Pipeline =====
 app.UseCors("AllowAll");
-app.MapControllers();
 app.MapGraphQL("/graphql");
+
 app.Run();

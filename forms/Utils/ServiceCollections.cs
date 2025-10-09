@@ -1,16 +1,16 @@
-using System.Diagnostics.CodeAnalysis;
 using forms.Service.Implementation;
 using forms.Service.Interface;
+using forms.Utils.Security;
 
 namespace forms.Utils;
 
-[ExcludeFromCodeCoverage]
 public static class ServiceCollection
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
         return services;
     }
 }
