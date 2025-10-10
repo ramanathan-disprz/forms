@@ -5,7 +5,9 @@ namespace forms.Model;
 [Table("admins")]
 public class Admin : BaseModel
 {
-    [Column("form_count")]
+    [Column("user_id")] 
+    public long UserId { get; set; }
+
+    [Column("form_count")] 
     public int FormLimit { get; set; }
-    
 }

@@ -15,7 +15,7 @@ namespace forms.Model.FormAuthoring;
         typeof(DropdownQuestion)
     )
 ]
-public abstract class BaseQuestion : BaseModel
+public class BaseQuestion : BaseModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

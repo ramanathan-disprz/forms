@@ -5,7 +5,7 @@ using forms.Repository.Interfaces;
 
 namespace forms.Repository.Implementations;
 
-public class UserRepository : CrudRepository.CrudRepository<User>, IUserRepository
+public class UserRepository : SQLRepository.SQLRepository<User>, IUserRepository
 {
     private readonly ApplicationDbContext _context;
 

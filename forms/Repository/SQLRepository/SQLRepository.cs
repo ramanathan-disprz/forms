@@ -2,14 +2,14 @@ using forms.Data;
 using forms.Exception;
 using Microsoft.EntityFrameworkCore;
 
-namespace forms.Repository.CrudRepository;
+namespace forms.Repository.SQLRepository;
 
-public class CrudRepository<T> : ICrudRepository<T> where T : class
+public class SQLRepository<T> : ISQLRepository<T> where T : class
 {
     private readonly ApplicationDbContext _context; // Connected to DB
     private readonly DbSet<T> _dbSet; // Table -> T
 
-    public CrudRepository(ApplicationDbContext context)
+    public SQLRepository(ApplicationDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<T>();

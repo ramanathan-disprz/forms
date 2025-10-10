@@ -1,6 +1,6 @@
-namespace forms.Repository.CrudRepository;
+namespace forms.Repository.SQLRepository;
 
-public interface ICrudRepository<T> where T : class
+public interface ISQLRepository<T> where T : class
 {
     IEnumerable<T> FindAll();
 

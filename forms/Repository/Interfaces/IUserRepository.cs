@@ -1,9 +1,9 @@
 using forms.Model;
-using forms.Repository.CrudRepository;
+using forms.Repository.SQLRepository;
 
 namespace forms.Repository.Interfaces;
 
-public interface IUserRepository : ICrudRepository<User>
+public interface IUserRepository : ISQLRepository<User>
 {
     bool ExistsByEmail(string? email);
 

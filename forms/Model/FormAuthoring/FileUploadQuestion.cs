@@ -23,13 +23,13 @@ public class FileUploadQuestion : BaseQuestion
     [BsonIgnoreIfNull]
     public int? MaxFiles { get; set; }
 
-    [BsonElement("storagePath")]
-    [BsonIgnoreIfNull]
-    public string? StoragePath { get; set; }
+    // [BsonElement("storagePath")]
+    // [BsonIgnoreIfNull]
+    // public string? StoragePath { get; set; }
 
-    [BsonElement("uploadedFiles")]
-    [BsonIgnoreIfNull]
-    public List<FileMeta>? UploadedFiles { get; set; }
+    // [BsonElement("uploadedFiles")]
+    // [BsonIgnoreIfNull]
+    // public List<FileMeta>? UploadedFiles { get; set; }
 
     public FileUploadQuestion()
     {

@@ -11,6 +11,7 @@ public static class ServiceCollection
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+        services.AddScoped<IFormService, FormService>();
         return services;
     }
 }

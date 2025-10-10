@@ -14,7 +14,6 @@ public class NumericQuestion : BaseQuestion
     [BsonElement("minLength")]
     [BsonIgnoreIfNull]
     public int? MinValue { get; set; }
-
     
     public NumericQuestion()
     {

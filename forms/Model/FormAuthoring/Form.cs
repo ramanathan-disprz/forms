@@ -20,7 +20,7 @@ public class Form : BaseModel
     public string? Description { get; set; }
 
     [BsonElement("publishedBy")]
-    public string PublishedBy { get; set; } = string.Empty;
+    public long PublishedBy { get; set; }
 
     [BsonElement("publishedDate")]
     [BsonIgnoreIfNull]
@@ -42,5 +42,6 @@ public class Form : BaseModel
     public bool AllowMultipleResponses { get; set; } = false;
 
     [BsonElement("questions")]
-    public List<BaseQuestion> Questions { get; set; } = new();
+    [BsonIgnoreIfNull]
+    public List<BaseQuestion>? Questions { get; set; }
 }
