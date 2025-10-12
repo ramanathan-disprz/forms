@@ -13,11 +13,11 @@ public class FileUploadQuestion : BaseQuestion
 
     [BsonElement("maxFileSizeMB")]
     [BsonIgnoreIfNull]
-    public int? MaxFileSizeMB { get; set; }
+    public long? MaxFileSizeMB { get; set; }
 
     [BsonElement("maxTotalFileSizeMB")]
     [BsonIgnoreIfNull]
-    public int? MaxTotalFileSizeMB { get; set; }
+    public long? MaxTotalFileSizeMB { get; set; }
 
     [BsonElement("maxFiles")]
     [BsonIgnoreIfNull]

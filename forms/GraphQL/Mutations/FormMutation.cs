@@ -22,4 +22,10 @@ public class FormMutation
         var form = _service.Create(request);
         return _mapper.Map<FormDto>(form);
     }
+
+    public FormDto UpdateForm(string id, FormRequest request)
+    {
+        var form = _service.UpdateForm(id, request);
+        return _mapper.Map<FormDto>(form);
+    }
 }

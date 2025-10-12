@@ -1,3 +1,4 @@
+using System.Text.Json;
 using AutoMapper;
 using forms.Model.FormAuthoring;
 using forms.Repository.Interfaces;
@@ -27,8 +28,19 @@ public class FormService : IFormService
 
     public Form Create(FormRequest request)
     {
-        _log.LogInformation("Create form : {request}", request);
+        _log.LogInformation("Create form : {request}", 
+            JsonSerializer.Serialize(request));
         var form = _mapper.Map<Form>(request);
         return _repository.Create(form);
+    }
+
+    public Form UpdateForm(string id, FormRequest request)
+    {
+        _log.LogInformation("Updating form with id: {formId} " +
+                            "and request: {request}", id, JsonSerializer.Serialize(request));
+
+        var form = Fetch(id);
+        form = _mapper.Map(request, form);
+        return _repository.Update(id, form);
     }
 }
