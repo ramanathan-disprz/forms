@@ -1,8 +1,10 @@
 using System.Text.Json;
 using AutoMapper;
+using forms.Mapping;
 using forms.Model.FormAuthoring;
 using forms.Repository.Interfaces;
 using forms.Request;
+using forms.Request.FormAuthoring;
 using forms.Service.Interface;
 
 namespace forms.Service.Implementation;
@@ -10,6 +12,7 @@ namespace forms.Service.Implementation;
 public class FormService : IFormService
 {
     private readonly IMapper _mapper;
+     
     private readonly ILogger<FormService> _log;
     private readonly IFormRepository _repository;
 
@@ -28,9 +31,9 @@ public class FormService : IFormService
 
     public Form Create(FormRequest request)
     {
-        _log.LogInformation("Create form : {request}", 
+        _log.LogInformation("Create form : {request}",
             JsonSerializer.Serialize(request));
-        var form = _mapper.Map<Form>(request);
+        var form = FormMapper.MapToForm(request);
         return _repository.Create(form);
     }
 

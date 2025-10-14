@@ -4,11 +4,11 @@ using forms.Repository.Interfaces;
 
 namespace forms.Repository.Implementations;
 
-public class FormResponseRepository : SQLRepository.SQLRepository<FormResponse>, IFormResponseRepository
+public class AdminRepository : SQLRepository.SQLRepository<Admin>, IAdminRepository
 {
     private readonly ApplicationDbContext _context;
 
-    public FormResponseRepository(ApplicationDbContext context) : base(context)
+    public AdminRepository(ApplicationDbContext context) : base(context)
     {
         _context = context;
     }

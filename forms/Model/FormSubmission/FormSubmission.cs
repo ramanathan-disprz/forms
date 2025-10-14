@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json;
 
-namespace forms.Model;
+namespace forms.Model.FormSubmission;
 
-[Table("form_responses")]
-public class FormResponse
+[Table("form_submissions")]
+public class FormSubmission : BaseModel
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -24,17 +23,7 @@ public class FormResponse
 
     [Required] 
     [Column("submitted_at")] 
-    public DateTime SubmittedAt { get; set; }
-
-    [Required]
-    [Column("answers", TypeName = "json")]
-    public string Answers { get; set; } = "{}";
-
-    [NotMapped]
-    public JsonDocument AnswersJson =>
-        string.IsNullOrWhiteSpace(Answers)
-            ? JsonDocument.Parse("{}")
-            : JsonDocument.Parse(Answers);
+    public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
 
     public void GenerateId()
     {

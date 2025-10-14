@@ -1,6 +1,9 @@
 using AutoMapper;
 using forms.Dto;
+using forms.Dto.FormAuthoring;
+using forms.Mapping;
 using forms.Request;
+using forms.Request.FormAuthoring;
 using forms.Service.Interface;
 
 namespace forms.GraphQL.Mutations;
@@ -20,12 +23,12 @@ public class FormMutation
     public FormDto CreateForm(FormRequest request)
     {
         var form = _service.Create(request);
-        return _mapper.Map<FormDto>(form);
+        return FormMapper.MapToDto(form);
     }
 
     public FormDto UpdateForm(string id, FormRequest request)
     {
         var form = _service.UpdateForm(id, request);
-        return _mapper.Map<FormDto>(form);
+        return FormMapper.MapToDto(form);
     }
 }

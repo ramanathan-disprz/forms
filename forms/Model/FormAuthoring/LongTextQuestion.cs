@@ -3,9 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace forms.Model.FormAuthoring;
 
-[BsonDiscriminator("long_answer")]
+[BsonDiscriminator("long_text")]
 [BsonIgnoreExtraElements]
-public class LongAnswerQuestion : BaseQuestion
+public class LongTextQuestion : FormQuestion
 {
     [BsonElement("maxLength")]
     [BsonIgnoreIfNull]
@@ -15,9 +15,9 @@ public class LongAnswerQuestion : BaseQuestion
     [BsonIgnoreIfNull]
     public int? MinLength { get; set; }
 
-    public LongAnswerQuestion()
+    public LongTextQuestion()
     {
-        Type = QuestionType.LongAnswer;
+        Type = QuestionType.LongText;
     }
     
 }

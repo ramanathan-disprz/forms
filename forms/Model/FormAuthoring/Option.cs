@@ -8,7 +8,7 @@ public class Option
     public string Id { get; set; } = string.Empty; 
 
     [BsonElement("label")]
-    public string Label { get; set; } = string.Empty; 
+    public string? Label { get; set; } = string.Empty; 
 
     [BsonElement("value")]
     [BsonIgnoreIfNull]

@@ -1,5 +1,7 @@
 using AutoMapper;
 using forms.Dto;
+using forms.Dto.FormAuthoring;
+using forms.Mapping;
 using forms.Service.Interface;
 
 namespace forms.GraphQL.Queries;
@@ -19,6 +21,6 @@ public class FormQuery
     public FormDto FetchForm(string id)
     {
         var form = _service.Fetch(id);
-        return _mapper.Map<FormDto>(form);
+        return FormMapper.MapToDto(form);
     }
 }

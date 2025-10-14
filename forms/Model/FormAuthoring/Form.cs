@@ -12,15 +12,14 @@ public class Form : BaseModel
     [BsonElement("id")]
     public string? Id { get; set; }
 
-    [BsonElement("title")]
-    public string Title { get; set; } = string.Empty;
+    [BsonElement("title")] 
+    public string? Title { get; set; } = string.Empty;
 
     [BsonElement("description")]
     [BsonIgnoreIfNull]
     public string? Description { get; set; }
 
-    [BsonElement("publishedBy")]
-    public long PublishedBy { get; set; }
+    [BsonElement("publishedBy")] public long? PublishedBy { get; set; }
 
     [BsonElement("publishedDate")]
     [BsonIgnoreIfNull]
@@ -35,13 +34,13 @@ public class Form : BaseModel
     [BsonRepresentation(BsonType.String)]
     public FormViewStatus FormViewStatus { get; set; } = FormViewStatus.Enabled;
 
-    [BsonElement("questionLimit")]
-    public int QuestionLimit { get; set; }
+    [BsonElement("questionLimit")] 
+    public int? QuestionLimit { get; set; }
 
     [BsonElement("allowMultipleResponses")]
     public bool AllowMultipleResponses { get; set; } = false;
 
     [BsonElement("questions")]
     [BsonIgnoreIfNull]
-    public List<BaseQuestion>? Questions { get; set; }
+    public List<FormQuestion>? Questions { get; set; }
 }

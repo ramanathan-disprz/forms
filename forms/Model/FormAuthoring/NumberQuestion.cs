@@ -3,9 +3,9 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace forms.Model.FormAuthoring;
 
-[BsonDiscriminator("numeric")]
+[BsonDiscriminator("number")]
 [BsonIgnoreExtraElements]
-public class NumericQuestion : BaseQuestion
+public class NumberQuestion : FormQuestion
 {
     [BsonElement("maxValue")]
     [BsonIgnoreIfNull]
@@ -15,9 +15,9 @@ public class NumericQuestion : BaseQuestion
     [BsonIgnoreIfNull]
     public int? MinValue { get; set; }
     
-    public NumericQuestion()
+    public NumberQuestion()
     {
-        Type = QuestionType.Numeric;
+        Type = QuestionType.Number;
     }
     
 }

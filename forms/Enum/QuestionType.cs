@@ -1,13 +1,11 @@
-using MongoDB.Bson.Serialization.Attributes;
-
 namespace forms.Enum;
 
 public enum QuestionType
 {
-    ShortAnswer,
-    LongAnswer,
+    ShortText,
+    LongText,
     FileUpload,
-    DatePicker,
-    Numeric,
-    Dropdown
+    Date,
+    Number,
+    Select
 }

@@ -2,10 +2,15 @@ using MongoDB.Bson.Serialization.Attributes;
 using forms.Enum;
 
 namespace forms.Model.FormAuthoring;
+/*
+Store dates as UTC DateTime to keep them unambiguous across timezones.
+Convert from ISO-8601 strings to DateTimeOffset on input, then assign.
+UtcDateTime to MinDateUtc/MaxDateUtc.
+*/
 
-[BsonDiscriminator("date_picker")]
+[BsonDiscriminator("date")]
 [BsonIgnoreExtraElements]
-public class DatePickerQuestion : BaseQuestion
+public class DateQuestion : FormQuestion
 {
     [BsonElement("minDate")]
     [BsonIgnoreIfNull]
@@ -22,14 +27,8 @@ public class DatePickerQuestion : BaseQuestion
     [BsonIgnoreIfNull]
     public string? Format { get; set; }
 
-    public DatePickerQuestion()
+    public DateQuestion()
     {
-        Type = QuestionType.DatePicker;
+        Type = QuestionType.Date;
     }
 }
-
-/*
-Store dates as UTC DateTime to keep them unambiguous across timezones.
-Convert from ISO-8601 strings to DateTimeOffset on input, then assign.
-UtcDateTime to MinDateUtc/MaxDateUtc.
-*/

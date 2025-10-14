@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace forms.Model;
@@ -5,6 +6,7 @@ namespace forms.Model;
 [Table("admins")]
 public class Admin : BaseModel
 {
+    [Key]
     [Column("user_id")] 
     public long UserId { get; set; }
 

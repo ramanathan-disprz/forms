@@ -3,16 +3,16 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace forms.Model.FormAuthoring;
 
-[BsonDiscriminator("short_answer")]
+[BsonDiscriminator("short_text")]
 [BsonIgnoreExtraElements]
-public class ShortAnswerQuestion : BaseQuestion
+public class ShortTextQuestion : FormQuestion
 {
     [BsonElement("maxLength")]
     [BsonIgnoreIfNull]
     public int? MaxLength { get; set; }
 
-    public ShortAnswerQuestion()
+    public ShortTextQuestion()
     {
-        Type = QuestionType.ShortAnswer;
+        Type = QuestionType.ShortText;
     }
 }

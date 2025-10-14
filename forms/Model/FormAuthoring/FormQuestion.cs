@@ -7,15 +7,15 @@ namespace forms.Model.FormAuthoring;
 [BsonDiscriminator(Required = true)]
 [
     BsonKnownTypes(
-        typeof(ShortAnswerQuestion),
-        typeof(LongAnswerQuestion),
+        typeof(ShortTextQuestion),
+        typeof(LongTextQuestion),
         typeof(FileUploadQuestion),
-        typeof(DatePickerQuestion),
-        typeof(NumericQuestion),
-        typeof(DropdownQuestion)
+        typeof(DateQuestion),
+        typeof(NumberQuestion),
+        typeof(SelectQuestion)
     )
 ]
-public class BaseQuestion : BaseModel
+public class FormQuestion : BaseModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -27,7 +27,7 @@ public class BaseQuestion : BaseModel
     public QuestionType Type { get; set; }
 
     [BsonElement("questionText")] 
-    public string QuestionText { get; set; } = string.Empty;
+    public string? QuestionText { get; set; }
 
     [BsonElement("description")]
     [BsonIgnoreIfNull]
@@ -41,15 +41,5 @@ public class BaseQuestion : BaseModel
     public bool Required { get; set; }
 
     [BsonElement("order")] 
-    public int Order { get; set; }
-
-    // string | string[] | null
-    [BsonElement("defaultValue")]
-    [BsonIgnoreIfNull]
-    public object? DefaultValue { get; set; }
-
-    // string | string[] | null
-    [BsonElement("answer")]
-    [BsonIgnoreIfNull]
-    public object? Answer { get; set; }
+    public int? Order { get; set; }
 }

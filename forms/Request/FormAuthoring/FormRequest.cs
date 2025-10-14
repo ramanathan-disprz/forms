@@ -1,7 +1,7 @@
 using forms.Enum;
 using forms.Model.FormAuthoring;
 
-namespace forms.Request;
+namespace forms.Request.FormAuthoring;
 
 public class FormRequest
 {
@@ -13,5 +13,5 @@ public class FormRequest
     public FormViewStatus? FormViewStatus { get; set; }
     public int? QuestionLimit { get; set; }
     public bool? AllowMultipleResponses { get; set; }
-    public List<BaseQuestion>? Questions { get; set; }
+    public List<FormQuestionRequest>? Questions { get; set; }
 }

@@ -5,7 +5,7 @@ namespace forms.Model.FormAuthoring;
 
 [BsonDiscriminator("file_upload")]
 [BsonIgnoreExtraElements]
-public class FileUploadQuestion : BaseQuestion
+public class FileUploadQuestion : FormQuestion
 {
     [BsonElement("allowedFileTypes")]
     [BsonIgnoreIfNull]

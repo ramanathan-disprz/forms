@@ -41,7 +41,7 @@ public class AuthService : IAuthService
     {
         var user = _repository.FindByEmailOrThrow(request.Email);
         ValidateCredentials(request, user);
-        return null;
+        return new AuthResponseDto();
     }
 
     private void ValidateEmail(string? email)

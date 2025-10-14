@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using forms.Repository.Implementations;
 using forms.Repository.Interfaces;
 
@@ -8,8 +7,15 @@ public static class RepositoryCollection
 {
     public static IServiceCollection AddRepositories(this IServiceCollection repositories)
     {
+        // User Repositories
         repositories.AddScoped<IUserRepository, UserRepository>();
+        repositories.AddScoped<IAdminRepository, AdminRepository>();
+
         repositories.AddScoped<IFormRepository, FormRepository>();
+        
+        // Response Repositories
+        repositories.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
+        repositories.AddScoped<IFormAnswerRepository, FormAnswerRepository>();
         return repositories;
     }
 }

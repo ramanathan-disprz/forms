@@ -3,6 +3,6 @@ using forms.Repository.SQLRepository;
 
 namespace forms.Repository.Interfaces;
 
-public interface IFormResponseRepository : ISQLRepository<FormResponse>
+public interface IAdminRepository : ISQLRepository<Admin>
 {
 }

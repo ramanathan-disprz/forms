@@ -3,9 +3,9 @@ using forms.Enum;
 
 namespace forms.Model.FormAuthoring;
 
-[BsonDiscriminator("dropdown")]
+[BsonDiscriminator("select")]
 [BsonIgnoreExtraElements]
-public class DropdownQuestion : BaseQuestion
+public class SelectQuestion : FormQuestion
 {
     [BsonElement("options")]
     public List<Option> Options { get; set; } = new();
@@ -14,9 +14,9 @@ public class DropdownQuestion : BaseQuestion
     [BsonIgnoreIfNull]
     public bool? MultiSelect { get; set; } // true if multiple selection allowed
 
-    public DropdownQuestion()
+    public SelectQuestion()
     {
-        Type = QuestionType.Dropdown;
+        Type = QuestionType.Select;
     }
 
     // Optional helper: ensure Option.Value defaults to Option.Label before saving
