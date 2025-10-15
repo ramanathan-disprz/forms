@@ -11,9 +11,8 @@ public class NoSQLRepository<T> : INoSQLRepository<T> where T : class
     private readonly IMongoCollection<T> _collection;
     private readonly string _collectionName;
 
-    public NoSQLRepository(MongoDbContext context)
+    public NoSQLRepository(MongoDbContext context, string collectionName)
     {
-        var collectionName = "forms";
         _collection = context.Collection<T>(collectionName);
         _collectionName = collectionName;
     }
@@ -44,11 +43,35 @@ public class NoSQLRepository<T> : INoSQLRepository<T> where T : class
 
         return entity;
     }
+    
+    public IEnumerable<T> GetByIds(IEnumerable<string> ids)
+    {
+        if (ids == null || !ids.Any())
+            return Enumerable.Empty<T>();
+
+        // Convert string IDs to ObjectIds
+        var objectIds = ids
+            .Where(id => ObjectId.TryParse(id, out _))
+            .Select(id => ObjectId.Parse(id))
+            .ToList();
+
+        var filter = Builders<T>.Filter.In("_id", objectIds);
+        return _collection.Find(filter).ToList();
+    }
 
     public T Create(T entity)
     {
         _collection.InsertOne(entity);
         return entity;
+    }
+
+    public IEnumerable<T> CreateMany(IEnumerable<T> entities)
+    {
+        if (entities == null || !entities.Any())
+            return Enumerable.Empty<T>();
+
+        _collection.InsertMany(entities);
+        return entities;
     }
 
     public T Update(string id, T entity)
@@ -70,6 +93,41 @@ public class NoSQLRepository<T> : INoSQLRepository<T> where T : class
 
         return entity;
     }
+
+    public IEnumerable<T> UpdateMany(IEnumerable<T> entities, Func<T, string> getId)
+    {
+        if (entities == null || !entities.Any())
+            return Enumerable.Empty<T>();
+
+        var bulkOps = new List<WriteModel<T>>();
+
+        foreach (var entity in entities)
+        {
+            var id = getId(entity);
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("Entity Id is required for update");
+
+            FilterDefinition<T> filter;
+
+            if (ObjectId.TryParse(id, out var objectId))
+                filter = Builders<T>.Filter.Eq("_id", objectId);
+            else
+                filter = Builders<T>.Filter.Eq("_id", id);
+
+            var replaceOne = new ReplaceOneModel<T>(filter, entity)
+            {
+                IsUpsert = false // explicitly no upsert
+            };
+
+            bulkOps.Add(replaceOne);
+        }
+
+        if (bulkOps.Any())
+            _collection.BulkWrite(bulkOps);
+
+        return entities;
+    }
+
 
     public void Delete(string id)
     {

@@ -21,6 +21,6 @@ public class FormQuery
     public FormDto FetchForm(string id)
     {
         var form = _service.Fetch(id);
-        return FormMapper.MapToDto(form);
+        return _mapper.Map<FormDto>(form);
     }
 }

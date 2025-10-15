@@ -1,5 +1,6 @@
 using MongoDB.Bson.Serialization.Attributes;
 using forms.Enum;
+using MongoDB.Bson;
 
 namespace forms.Model.FormAuthoring;
 
@@ -8,7 +9,7 @@ namespace forms.Model.FormAuthoring;
 public class SelectQuestion : FormQuestion
 {
     [BsonElement("options")]
-    public List<Option> Options { get; set; } = new();
+    public List<Option>? Options { get; set; }
 
     [BsonElement("multiSelect")]
     [BsonIgnoreIfNull]

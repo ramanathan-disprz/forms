@@ -12,7 +12,8 @@ public static class RepositoryCollection
         repositories.AddScoped<IAdminRepository, AdminRepository>();
 
         repositories.AddScoped<IFormRepository, FormRepository>();
-        
+        repositories.AddScoped<IQuestionRepository, QuestionRepository>();
+
         // Response Repositories
         repositories.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
         repositories.AddScoped<IFormAnswerRepository, FormAnswerRepository>();

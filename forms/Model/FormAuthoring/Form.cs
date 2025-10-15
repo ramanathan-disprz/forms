@@ -19,7 +19,8 @@ public class Form : BaseModel
     [BsonIgnoreIfNull]
     public string? Description { get; set; }
 
-    [BsonElement("publishedBy")] public long? PublishedBy { get; set; }
+    [BsonElement("publishedBy")] 
+    public long? PublishedBy { get; set; }
 
     [BsonElement("publishedDate")]
     [BsonIgnoreIfNull]
@@ -37,10 +38,7 @@ public class Form : BaseModel
     [BsonElement("questionLimit")] 
     public int? QuestionLimit { get; set; }
 
+    // by default, it is initialised to false.
     [BsonElement("allowMultipleResponses")]
-    public bool AllowMultipleResponses { get; set; } = false;
-
-    [BsonElement("questions")]
-    [BsonIgnoreIfNull]
-    public List<FormQuestion>? Questions { get; set; }
+    public bool AllowMultipleResponses { get; set; }
 }

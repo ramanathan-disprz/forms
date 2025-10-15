@@ -11,7 +11,7 @@ public interface IFormService
 
     Form Create(FormRequest request);
 
-    Form UpdateForm(string id, FormRequest request);
+    Form Update(string id, FormRequest request);
     
-    // void DeleteForm(string id);
+    void Delete(string id);
 }

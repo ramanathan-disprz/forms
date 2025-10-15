@@ -1,64 +1,66 @@
+using AutoMapper;
 using forms.Dto.FormAuthoring;
 using forms.Enum;
 using forms.Model.FormAuthoring;
+using forms.Repository.Interfaces;
 using forms.Request.FormAuthoring;
 using Option = forms.Model.FormAuthoring.Option;
 
 namespace forms.Mapping;
 
-public static class FormMapper
+public class QuestionMapper
 {
-    public static Form MapToForm(FormRequest request)
+    private readonly IQuestionRepository _repository;
+
+    public QuestionMapper(IQuestionRepository repository)
+    {
+        _repository = repository;
+    }
+
+    public FormQuestion Map(FormQuestionRequest request)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
 
-        return new Form
-        {
-            Title = request.Title,
-            Description = request.Description,
-            PublishedBy = request.PublishedBy,
-            PublishedDate = request.PublishedDate,
-            FormStatus = request.FormStatus ?? FormStatus.Draft,
-            FormViewStatus = request.FormViewStatus ?? FormViewStatus.Disabled,
-            QuestionLimit = request.QuestionLimit,
-            AllowMultipleResponses = request.AllowMultipleResponses ?? false,
-            Questions = request.Questions?.Select(MapQuestion).ToList()
-        };
-    }
-
-    private static FormQuestion MapQuestion(FormQuestionRequest request)
-    {
         return request.Type switch
         {
             QuestionType.ShortText => new ShortTextQuestion
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.ShortText,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
                 Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 MaxLength = request.MaxLength
             },
 
             QuestionType.LongText => new LongTextQuestion
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.LongText,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
                 Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 MinLength = request.MinLength,
                 MaxLength = request.MaxLength
             },
 
             QuestionType.FileUpload => new FileUploadQuestion()
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.FileUpload,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
                 Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 AllowedFileTypes = request.AllowedFileTypes,
                 MaxFileSizeMB = request.MaxFileSizeMB,
                 MaxTotalFileSizeMB = request.MaxTotalFileSizeMB,
@@ -67,34 +69,45 @@ public static class FormMapper
 
             QuestionType.Date => new DateQuestion
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.Date,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
+                Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 MinDate = request.MinDate,
                 MaxDate = request.MaxDate
             },
 
             QuestionType.Number => new NumberQuestion
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.Number,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
+                Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 MinValue = request.MinValue ?? int.MinValue,
                 MaxValue = request.MaxValue ?? int.MaxValue
             },
 
             QuestionType.Select => new SelectQuestion
             {
+                FormId = request.FormId,
+                Type = request.Type ?? QuestionType.Select,
                 QuestionText = request.QuestionText ?? string.Empty,
                 Description = request.Description,
+                Placeholder = request.Placeholder,
                 Required = request.Required ?? false,
                 Order = request.Order,
+
                 MultiSelect = request.MultiSelect ?? false,
                 Options = request.Options?.Select(o => new Option
                 {
-                    Id = o.Id,
                     Label = o.Label,
                     Value = o.Value
                 }).ToList()
@@ -104,10 +117,18 @@ public static class FormMapper
         };
     }
 
+    public IEnumerable<FormQuestion>
+        Map(IEnumerable<FormQuestionRequest> requests)
+    {
+        return requests.Select(q => Map(q));
+    }
+
+    /*
     public static FormDto MapToDto(Form form)
     {
         return new FormDto
         {
+            Id = form.Id,
             Title = form.Title,
             Description = form.Description,
             PublishedBy = form.PublishedBy,
@@ -127,6 +148,8 @@ public static class FormMapper
             QuestionType.ShortText => question is ShortTextQuestion s
                 ? new FormQuestionDto
                 {
+                    Id = s.Id,
+                    Type = s.Type,
                     QuestionText = s.QuestionText ?? string.Empty,
                     Description = s.Description,
                     Placeholder = s.Placeholder,
@@ -139,6 +162,8 @@ public static class FormMapper
             QuestionType.LongText => question is LongTextQuestion l
                 ? new FormQuestionDto
                 {
+                    Id = l.Id,
+                    Type = l.Type,
                     QuestionText = l.QuestionText ?? string.Empty,
                     Description = l.Description,
                     Placeholder = l.Placeholder,
@@ -152,6 +177,8 @@ public static class FormMapper
             QuestionType.FileUpload => question is FileUploadQuestion f
                 ? new FormQuestionDto
                 {
+                    Id = f.Id,
+                    Type = f.Type,
                     QuestionText = f.QuestionText ?? string.Empty,
                     Description = f.Description,
                     Placeholder = f.Placeholder,
@@ -167,6 +194,8 @@ public static class FormMapper
             QuestionType.Date => question is DateQuestion d
                 ? new FormQuestionDto
                 {
+                    Id = d.Id,
+                    Type = d.Type,
                     QuestionText = d.QuestionText ?? string.Empty,
                     Description = d.Description,
                     Required = d.Required,
@@ -179,6 +208,8 @@ public static class FormMapper
             QuestionType.Number => question is NumberQuestion n
                 ? new FormQuestionDto
                 {
+                    Id = n.Id,
+                    Type = n.Type,
                     QuestionText = n.QuestionText ?? string.Empty,
                     Description = n.Description,
                     Required = n.Required,
@@ -191,6 +222,8 @@ public static class FormMapper
             QuestionType.Select => question is SelectQuestion s
                 ? new FormQuestionDto
                 {
+                    Id = s.Id,
+                    Type = s.Type,
                     QuestionText = s.QuestionText ?? string.Empty,
                     Description = s.Description,
                     Required = s.Required,
@@ -205,5 +238,88 @@ public static class FormMapper
                 }
                 : throw new System.Exception("Invalid question type")
         };
+    }
+
+*/
+    public FormQuestion Merge(FormQuestion existing, FormQuestionRequest request)
+    {
+        existing.QuestionText = request.QuestionText ?? existing.QuestionText;
+        existing.Description = request.Description ?? existing.Description;
+        existing.Placeholder = request.Placeholder ?? existing.Placeholder;
+        existing.Required = request.Required ?? existing.Required;
+        existing.Order = request.Order ?? existing.Order;
+
+        // Type-specific updates
+        switch (existing)
+        {
+            case ShortTextQuestion shortText when existing.Type == QuestionType.ShortText:
+                shortText.MaxLength = request.MaxLength ?? shortText.MaxLength;
+                break;
+
+            case LongTextQuestion longText when existing.Type == QuestionType.LongText:
+                longText.MinLength = request.MinLength ?? longText.MinLength;
+                longText.MaxLength = request.MaxLength ?? longText.MaxLength;
+                break;
+
+            case FileUploadQuestion fileUpload when existing.Type == QuestionType.FileUpload:
+                fileUpload.AllowedFileTypes = request.AllowedFileTypes ?? fileUpload.AllowedFileTypes;
+                fileUpload.MaxFileSizeMB = request.MaxFileSizeMB ?? fileUpload.MaxFileSizeMB;
+                fileUpload.MaxTotalFileSizeMB = request.MaxTotalFileSizeMB ?? fileUpload.MaxTotalFileSizeMB;
+                fileUpload.MaxFiles = request.MaxFiles ?? fileUpload.MaxFiles;
+                break;
+
+            case DateQuestion date when existing.Type == QuestionType.Date:
+                date.MinDate = request.MinDate ?? date.MinDate;
+                date.MaxDate = request.MaxDate ?? date.MaxDate;
+                break;
+
+            case NumberQuestion number when existing.Type == QuestionType.Number:
+                number.MinValue = request.MinValue ?? number.MinValue;
+                number.MaxValue = request.MaxValue ?? number.MaxValue;
+                break;
+
+            case SelectQuestion select when existing.Type == QuestionType.Select:
+                select.MultiSelect = request.MultiSelect ?? select.MultiSelect;
+                if (request.Options != null && request.Options.Any())
+                {
+                    select.Options = request.Options.Select(o => new Option
+                    {
+                        Label = o.Label,
+                        Value = o.Value
+                    }).ToList();
+                }
+                break;
+        }
+
+        return existing;
+    }
+
+    public IEnumerable<FormQuestion> Merge(IEnumerable<FormQuestionRequest> requests)
+    {
+        // Get all IDs to update
+        var idsToUpdate = requests
+            .Where(q => !string.IsNullOrEmpty(q.Id))
+            .Select(q => q.Id!)
+            .ToList();
+
+        // Fetch only the existing questions from the repository
+        var existingQuestions = _repository.GetByIds(idsToUpdate);
+
+        var mergedQuestions = new List<FormQuestion>();
+
+        foreach (var qReq in requests)
+        {
+            if (!string.IsNullOrEmpty(qReq.Id))
+            {
+                var existing = existingQuestions.FirstOrDefault(q => q.Id == qReq.Id);
+                if (existing != null)
+                {
+                    // Merge with existing question
+                    mergedQuestions.Add(Merge(existing, qReq));
+                }
+            }
+        }
+
+        return mergedQuestions;
     }
 }

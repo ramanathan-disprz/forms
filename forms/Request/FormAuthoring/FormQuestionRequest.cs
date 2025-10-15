@@ -4,6 +4,8 @@ namespace forms.Request.FormAuthoring;
 
 public class FormQuestionRequest
 {
+    public string? Id { get; set; }
+    public string? FormId { get; set; }
     public QuestionType? Type { get; set; }
     public string? QuestionText { get; set; } = string.Empty;
     public string? Description { get; set; }

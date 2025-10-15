@@ -3,6 +3,7 @@ using forms.Enum;
 namespace forms.Dto.FormAuthoring;
 public class FormQuestionDto
 {
+    public string? Id { get; set; }
     public QuestionType? Type { get; set; }
     public string? QuestionText { get; set; }
     public string? Description { get; set; }

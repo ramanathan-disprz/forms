@@ -20,15 +20,24 @@ public class FormMutation
         _service = service;
     }
 
+    [GraphQLName("createForm")]
     public FormDto CreateForm(FormRequest request)
     {
         var form = _service.Create(request);
-        return FormMapper.MapToDto(form);
+        return _mapper.Map<FormDto>(form);
     }
 
+    [GraphQLName("updateForm")]
     public FormDto UpdateForm(string id, FormRequest request)
     {
-        var form = _service.UpdateForm(id, request);
-        return FormMapper.MapToDto(form);
+        var form = _service.Update(id, request);
+        return _mapper.Map<FormDto>(form);
+    }
+
+    [GraphQLName("deleteForm")]
+    public bool DeleteForm(string id)
+    {
+        _service.Delete(id);
+        return true;
     }
 }

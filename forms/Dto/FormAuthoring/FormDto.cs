@@ -14,5 +14,4 @@ public class FormDto
     public FormViewStatus? FormViewStatus { get; set; }
     public int? QuestionLimit { get; set; }
     public bool? AllowMultipleResponses { get; set; }
-    public List<FormQuestionDto>? Questions { get; set; }
 }

@@ -13,5 +13,7 @@ public class FormRequest
     public FormViewStatus? FormViewStatus { get; set; }
     public int? QuestionLimit { get; set; }
     public bool? AllowMultipleResponses { get; set; }
-    public List<FormQuestionRequest>? Questions { get; set; }
+    
+    // questions
+    public IEnumerable<FormQuestionRequest>? Questions { get; set; }
 }

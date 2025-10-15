@@ -7,6 +7,7 @@ public class MongoDbContext
 {
     private readonly IMongoDatabase _database;
     private readonly string _formsCollectionName = "forms";
+    private readonly string _collectionName;
 
     public IMongoCollection<Form> Forms { get; }
 

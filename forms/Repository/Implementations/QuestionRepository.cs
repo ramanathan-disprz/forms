@@ -4,11 +4,11 @@ using forms.Repository.Interfaces;
 
 namespace forms.Repository.Implementations;
 
-public class FormRepository : NoSQLRepository.NoSQLRepository<Form>, IFormRepository
+public class QuestionRepository : NoSQLRepository.NoSQLRepository<FormQuestion>, IQuestionRepository
 {
     private readonly MongoDbContext _context;
 
-    public FormRepository(MongoDbContext context) : base(context, "forms")
+    public QuestionRepository(MongoDbContext context) : base(context, "questions")
     {
         _context = context;
     }

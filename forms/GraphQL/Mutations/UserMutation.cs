@@ -28,6 +28,6 @@ public class UserMutation
     public Boolean DeleteUser(long id)
     {
         _service.Delete(id);
-        return  true;
+        return true;
     }
 }
