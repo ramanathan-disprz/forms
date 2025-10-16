@@ -1,18 +1,16 @@
 using forms.Enum;
 
-namespace forms.Request.FormAuthoring;
-
-public class FormQuestionRequest
+namespace forms.Dto.FormAuthoring;
+public class QuestionDto
 {
     public string? Id { get; set; }
-    public string? FormId { get; set; }
     public QuestionType? Type { get; set; }
-    public string? QuestionText { get; set; } = string.Empty;
+    public string? QuestionText { get; set; }
     public string? Description { get; set; }
     public string? Placeholder { get; set; }
-    public bool? Required { get; set; } = false;
+    public bool? Required { get; set; }
     public int? Order { get; set; }
-
+    
     /* Short Text and Long Text Questions */
     public int? MinLength { get; set; }
     public int? MaxLength { get; set; }
@@ -32,11 +30,11 @@ public class FormQuestionRequest
     public int? MaxValue { get; set; } = Int32.MaxValue;
 
     /* Select Question */
-    public List<Option>? Options { get; set; }
+    public List<OptionDto>? Options { get; set; }
     public bool? MultiSelect { get; set; }
 }
 
-public class Option
+public class OptionDto
 {
     public string? Id { get; set; }
     public string? Label { get; set; }

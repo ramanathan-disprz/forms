@@ -1,6 +1,4 @@
 using forms.GraphQL.Mutations;
-using forms.Request;
-using forms.Request.FormAuthoring;
 using HotChocolate.Execution.Configuration;
 
 namespace forms.Utils;
@@ -13,6 +11,7 @@ public static class MutationCollection
         builder.Services.AddScoped<AuthMutation>();
         builder.Services.AddScoped<UserMutation>();
         builder.Services.AddScoped<FormMutation>();
+        builder.Services.AddScoped<QuestionMutation>();
 
         // Add root mutation type
         builder.AddMutationType<Mutation>();
@@ -21,6 +20,7 @@ public static class MutationCollection
         builder.AddTypeExtension<AuthMutation>();
         builder.AddTypeExtension<UserMutation>();
         builder.AddTypeExtension<FormMutation>();
+        builder.AddTypeExtension<QuestionMutation>();
 
         return builder;
     }

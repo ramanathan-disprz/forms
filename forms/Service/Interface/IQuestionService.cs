@@ -5,11 +5,19 @@ namespace forms.Service.Interface;
 
 public interface IQuestionService
 {
-    FormQuestion Create(FormQuestionRequest request);
+    IEnumerable<Question> IndexByFormId(string formId);
 
-    IEnumerable<FormQuestion> CreateMany(IEnumerable<FormQuestionRequest> requests);
+    Question Fetch(string id);
 
-    FormQuestion Update(string id, FormQuestionRequest request);
+    Question Create(QuestionRequest request);
 
-    IEnumerable<FormQuestion> UpdateMany(IEnumerable<FormQuestionRequest> requests);
+    IEnumerable<Question> CreateMany(IEnumerable<QuestionRequest> requests);
+
+    Question Update(string id, QuestionRequest request);
+
+    IEnumerable<Question> UpdateMany(IEnumerable<QuestionRequest> requests);
+    
+    void Delete(string id);
+
+    void DeleteByFormId(string formId);
 }

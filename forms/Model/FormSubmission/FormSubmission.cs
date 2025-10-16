@@ -11,7 +11,6 @@ public class FormSubmission : BaseModel
     [Column("id")]
     public long Id { get; set; }
 
-    // Mongo Form _id as string (24-hex).
     [Required]
     [MaxLength(24)]
     [Column("form_id")]

@@ -8,7 +8,7 @@ namespace forms.Repository.NoSQLRepository;
 
 public class NoSQLRepository<T> : INoSQLRepository<T> where T : class
 {
-    private readonly IMongoCollection<T> _collection;
+    public readonly IMongoCollection<T> _collection;
     private readonly string _collectionName;
 
     public NoSQLRepository(MongoDbContext context, string collectionName)

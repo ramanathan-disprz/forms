@@ -5,7 +5,7 @@ namespace forms.Model.FormAuthoring;
 
 [BsonDiscriminator("number")]
 [BsonIgnoreExtraElements]
-public class NumberQuestion : FormQuestion
+public class NumberQuestion : Question
 {
     [BsonElement("maxValue")]
     [BsonIgnoreIfNull]

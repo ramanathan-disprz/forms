@@ -15,5 +15,5 @@ public class FormRequest
     public bool? AllowMultipleResponses { get; set; }
     
     // questions
-    public IEnumerable<FormQuestionRequest>? Questions { get; set; }
+    public IEnumerable<QuestionRequest>? Questions { get; set; }
 }

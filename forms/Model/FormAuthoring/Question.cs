@@ -15,7 +15,7 @@ namespace forms.Model.FormAuthoring;
         typeof(SelectQuestion)
     )
 ]
-public class FormQuestion : BaseModel
+public class Question : BaseModel
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

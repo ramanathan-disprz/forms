@@ -16,8 +16,9 @@ public class QuestionMapper
     {
         _repository = repository;
     }
-
-    public FormQuestion Map(FormQuestionRequest request)
+    
+    // Request --> Model
+    public Question Map(QuestionRequest request)
     {
         if (request == null)
             throw new ArgumentNullException(nameof(request));
@@ -117,36 +118,19 @@ public class QuestionMapper
         };
     }
 
-    public IEnumerable<FormQuestion>
-        Map(IEnumerable<FormQuestionRequest> requests)
+    public IEnumerable<Question>
+        Map(IEnumerable<QuestionRequest> requests)
     {
         return requests.Select(q => Map(q));
     }
-
-    /*
-    public static FormDto MapToDto(Form form)
-    {
-        return new FormDto
-        {
-            Id = form.Id,
-            Title = form.Title,
-            Description = form.Description,
-            PublishedBy = form.PublishedBy,
-            PublishedDate = form.PublishedDate,
-            FormStatus = form.FormStatus,
-            FormViewStatus = form.FormViewStatus,
-            QuestionLimit = form.QuestionLimit,
-            AllowMultipleResponses = form.AllowMultipleResponses,
-            Questions = form.Questions?.Select(MapQuestionBack).ToList()
-        };
-    }
-
-    private static FormQuestionDto MapQuestionBack(FormQuestion question)
+    
+    // Model --> Dto
+    public QuestionDto Map(Question question)
     {
         return question.Type switch
         {
             QuestionType.ShortText => question is ShortTextQuestion s
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = s.Id,
                     Type = s.Type,
@@ -155,12 +139,13 @@ public class QuestionMapper
                     Placeholder = s.Placeholder,
                     Required = s.Required,
                     Order = s.Order,
+                    
                     MaxLength = s.MaxLength
                 }
                 : throw new System.Exception("Invalid question type"),
 
             QuestionType.LongText => question is LongTextQuestion l
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = l.Id,
                     Type = l.Type,
@@ -169,13 +154,14 @@ public class QuestionMapper
                     Placeholder = l.Placeholder,
                     Required = l.Required,
                     Order = l.Order,
+                    
                     MinLength = l.MinLength,
                     MaxLength = l.MaxLength
                 }
                 : throw new System.Exception("Invalid question type"),
 
             QuestionType.FileUpload => question is FileUploadQuestion f
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = f.Id,
                     Type = f.Type,
@@ -184,6 +170,7 @@ public class QuestionMapper
                     Placeholder = f.Placeholder,
                     Required = f.Required,
                     Order = f.Order,
+                    
                     AllowedFileTypes = f.AllowedFileTypes,
                     MaxFileSizeMB = f.MaxFileSizeMB,
                     MaxTotalFileSizeMB = f.MaxTotalFileSizeMB,
@@ -192,7 +179,7 @@ public class QuestionMapper
                 : throw new System.Exception("Invalid question type"),
 
             QuestionType.Date => question is DateQuestion d
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = d.Id,
                     Type = d.Type,
@@ -200,13 +187,14 @@ public class QuestionMapper
                     Description = d.Description,
                     Required = d.Required,
                     Order = d.Order,
+                    
                     MinDate = d.MinDate,
                     MaxDate = d.MaxDate
                 }
                 : throw new System.Exception("Invalid question type"),
 
             QuestionType.Number => question is NumberQuestion n
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = n.Id,
                     Type = n.Type,
@@ -214,13 +202,14 @@ public class QuestionMapper
                     Description = n.Description,
                     Required = n.Required,
                     Order = n.Order,
+                    
                     MinValue = n.MinValue ?? int.MinValue,
                     MaxValue = n.MaxValue ?? int.MaxValue
                 }
                 : throw new System.Exception("Invalid question type"),
 
             QuestionType.Select => question is SelectQuestion s
-                ? new FormQuestionDto
+                ? new QuestionDto
                 {
                     Id = s.Id,
                     Type = s.Type,
@@ -228,6 +217,7 @@ public class QuestionMapper
                     Description = s.Description,
                     Required = s.Required,
                     Order = s.Order,
+                    
                     MultiSelect = s.MultiSelect ?? false,
                     Options = s.Options?.Select(o => new OptionDto()
                     {
@@ -240,8 +230,13 @@ public class QuestionMapper
         };
     }
 
-*/
-    public FormQuestion Merge(FormQuestion existing, FormQuestionRequest request)
+    public IEnumerable<QuestionDto> Map(IEnumerable<Question> questions)
+    {
+        return questions.Select(q => Map(q));
+    }
+
+    //Merge
+    public Question Merge(Question existing, QuestionRequest request)
     {
         existing.QuestionText = request.QuestionText ?? existing.QuestionText;
         existing.Description = request.Description ?? existing.Description;
@@ -288,13 +283,14 @@ public class QuestionMapper
                         Value = o.Value
                     }).ToList();
                 }
+
                 break;
         }
 
         return existing;
     }
 
-    public IEnumerable<FormQuestion> Merge(IEnumerable<FormQuestionRequest> requests)
+    public IEnumerable<Question> Merge(IEnumerable<QuestionRequest> requests)
     {
         // Get all IDs to update
         var idsToUpdate = requests
@@ -305,7 +301,7 @@ public class QuestionMapper
         // Fetch only the existing questions from the repository
         var existingQuestions = _repository.GetByIds(idsToUpdate);
 
-        var mergedQuestions = new List<FormQuestion>();
+        var mergedQuestions = new List<Question>();
 
         foreach (var qReq in requests)
         {

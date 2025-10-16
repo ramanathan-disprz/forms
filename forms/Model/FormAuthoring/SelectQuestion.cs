@@ -6,7 +6,7 @@ namespace forms.Model.FormAuthoring;
 
 [BsonDiscriminator("select")]
 [BsonIgnoreExtraElements]
-public class SelectQuestion : FormQuestion
+public class SelectQuestion : Question
 {
     [BsonElement("options")]
     public List<Option>? Options { get; set; }

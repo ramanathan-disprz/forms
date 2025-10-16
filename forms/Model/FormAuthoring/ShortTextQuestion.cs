@@ -5,7 +5,7 @@ namespace forms.Model.FormAuthoring;
 
 [BsonDiscriminator("short_text")]
 [BsonIgnoreExtraElements]
-public class ShortTextQuestion : FormQuestion
+public class ShortTextQuestion : Question
 {
     [BsonElement("maxLength")]
     [BsonIgnoreIfNull]

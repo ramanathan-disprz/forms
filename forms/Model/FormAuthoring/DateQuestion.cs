@@ -10,7 +10,7 @@ UtcDateTime to MinDateUtc/MaxDateUtc.
 
 [BsonDiscriminator("date")]
 [BsonIgnoreExtraElements]
-public class DateQuestion : FormQuestion
+public class DateQuestion : Question
 {
     [BsonElement("minDate")]
     [BsonIgnoreIfNull]
