@@ -11,11 +11,13 @@ public class FormQuery
 {
     private readonly IMapper _mapper;
     private readonly IFormService _service;
+    private readonly QuestionMapper _questionMapper;
 
-    public FormQuery(IMapper mapper, IFormService service)
+    public FormQuery(IMapper mapper, IFormService service, QuestionMapper questionMapper)
     {
         _mapper = mapper;
         _service = service;
+        _questionMapper = questionMapper;
     }
 
     [GraphQLName("indexForms")]
@@ -35,7 +37,14 @@ public class FormQuery
     [GraphQLName("fetchFormWithQuestions")]
     public FormWithQuestionsDto FetchFormWithQuestions(string id)
     {
-        var form = _service.FetchWithQuestions(id);
-        return _mapper.Map<FormWithQuestionsDto>(form);
+        var formWithQuestions = _service.FetchWithQuestions(id);
+        var form = _mapper.Map<FormWithQuestionsDto>(formWithQuestions)?.form;
+        var questions = _questionMapper.Map(formWithQuestions.questions);
+
+        return new FormWithQuestionsDto
+        {
+            form = form,
+            questions = questions
+        };
     }
 }

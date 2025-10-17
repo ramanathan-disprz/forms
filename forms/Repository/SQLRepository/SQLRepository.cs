@@ -37,6 +37,13 @@ public class SQLRepository<T> : ISQLRepository<T> where T : class
         return entity;
     }
 
+    public IEnumerable<T> CreateMany(IEnumerable<T> entities)
+    {
+        _dbSet.AddRange(entities);
+        Save();
+        return entities;
+    }
+
     public T Update(T entity)
     {
         Save();

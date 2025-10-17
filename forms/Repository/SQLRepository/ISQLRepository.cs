@@ -10,6 +10,8 @@ public interface ISQLRepository<T> where T : class
 
     T Create(T entity);
 
+    IEnumerable<T> CreateMany(IEnumerable<T> entities);
+
     T Update(T entity);
 
     void Delete(T entity);

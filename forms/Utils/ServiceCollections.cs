@@ -19,11 +19,13 @@ public static class ServiceCollection
         services.AddScoped<IFormService, FormService>();
         services.AddScoped<IQuestionService, QuestionService>();
 
-        // Response Services
+        // Submission Services
         services.AddScoped<IFormSubmissionService, FormSubmissionService>();
-        
+        services.AddScoped<IFormAnswerService, FormAnswerService>();
+
         // Mapper
         services.AddScoped<QuestionMapper>();
+        
         return services;
     }
 }

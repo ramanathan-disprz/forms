@@ -8,9 +8,14 @@ namespace forms.Repository.Implementations;
 public class FormAnswerRepository : SQLRepository.SQLRepository<FormAnswer>, IFormAnswerRepository
 {
     private readonly ApplicationDbContext _context;
+
     public FormAnswerRepository(ApplicationDbContext context) : base(context)
     {
         _context = context;
     }
-       
+
+    public IEnumerable<FormAnswer> IndexAllBySubmissionId(long submissionId)
+    {
+        return _context.FormAnswers.Where(a => a.SubmissionId == submissionId).ToList();
+    }
 }

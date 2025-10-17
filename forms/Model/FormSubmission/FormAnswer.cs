@@ -15,7 +15,6 @@ public class FormAnswer : BaseModel
     [Column("submission_id")]
     public long SubmissionId { get; set; }
     
-    // 24-hex Mongo _id as string.
     [Required]
     [Column("question_id")]
     public string QuestionId { get; set; } = string.Empty;  
@@ -24,11 +23,11 @@ public class FormAnswer : BaseModel
     [Column("question_type")]
     public string QuestionType { get; set; } = string.Empty;
     
-    // For short, long, numeric, datepicker, dropdown single
+    // For short, long, numeric, datepicker
     [Column("value_text")]
     public string? ValueText { get; set; }
 
-    // For dropdown multi, file upload, or any complex type
+    // For dropdown, file upload
     [Column("value_json", TypeName = "json")]
     public string? ValueJson { get; set; }
     

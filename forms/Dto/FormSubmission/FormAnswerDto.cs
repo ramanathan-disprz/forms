@@ -1,12 +1,11 @@
-namespace forms.Request.FormSubmission;
+namespace forms.Dto.FormSubmission;
 
-public class FormAnswerRequest
+public class FormAnswerDto
 {
+    public long? Id { get; set; }
+    public long? SubmissionId { get; set; }
     public string? QuestionId { get; set; }
     public string? QuestionType { get; set; }
-    public long?  SubmissionId {get; set;}
-
-    // Depending on type, either text or JSON
     public string? ValueText { get; set; }
     public string? ValueJson { get; set; }
 }

@@ -6,4 +6,5 @@ namespace forms.Repository.Interfaces;
 
 public interface IFormAnswerRepository : ISQLRepository<FormAnswer>
 {
+    IEnumerable<FormAnswer> IndexAllBySubmissionId(long submissionId);
 }

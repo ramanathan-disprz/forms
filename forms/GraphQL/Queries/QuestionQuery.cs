@@ -23,8 +23,8 @@ public class QuestionQuery
         return _mapper.Map(questions);
     }
 
-    [GraphQLName("fetchQuestions")]
-    public QuestionDto FetchQuestions(string id)
+    [GraphQLName("fetchQuestion")]
+    public QuestionDto FetchQuestion(string id)
     {
         var question = _service.Fetch(id);
         return _mapper.Map(question);

@@ -11,6 +11,7 @@ public static class QueryCollection
         builder.Services.AddScoped<UserQuery>();
         builder.Services.AddScoped<FormQuery>();
         builder.Services.AddScoped<QuestionQuery>();
+        builder.Services.AddScoped<FormSubmissionQuery>();
 
         // Add root mutation type
         builder.AddQueryType<Query>();
@@ -19,6 +20,7 @@ public static class QueryCollection
         builder.AddTypeExtension<UserQuery>();
         builder.AddTypeExtension<FormQuery>();
         builder.AddTypeExtension<QuestionQuery>();
+        builder.AddTypeExtension<FormSubmissionQuery>();
 
         return builder;
     }

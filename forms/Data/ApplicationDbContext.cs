@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Admin> Admins => Set<Admin>();
 
-    public DbSet<FormSubmission> FormResponses => Set<FormSubmission>();
+    public DbSet<FormSubmission> FormSubmissions => Set<FormSubmission>();
 
     public DbSet<FormAnswer> FormAnswers => Set<FormAnswer>();
 
