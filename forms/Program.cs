@@ -1,3 +1,4 @@
+using forms.AWS;
 using forms.Data;
 using forms.Dto.FormAuthoring;
 using forms.GraphQL;
@@ -44,6 +45,9 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+
+// ===== Build App =====
+builder.Services.AddSingleton<AmazonS3Helper>();
 
 // ===== Build App =====
 var app = builder.Build();

@@ -1,4 +1,5 @@
 using AutoMapper;
+using forms.AWS;
 using forms.Dto.FormSubmission;
 using forms.Service.Interface;
 
@@ -8,11 +9,15 @@ namespace forms.GraphQL.Queries;
 public class FormSubmissionQuery
 {
     private readonly IMapper _mapper;
+    private readonly AmazonS3Helper _s3Helper;
     private readonly IFormSubmissionService _service;
 
-    public FormSubmissionQuery(IMapper mapper, IFormSubmissionService service)
+    public FormSubmissionQuery(IMapper mapper,
+        AmazonS3Helper s3Helper,
+        IFormSubmissionService service)
     {
         _mapper = mapper;
+        _s3Helper = s3Helper;
         _service = service;
     }
 
@@ -21,5 +26,12 @@ public class FormSubmissionQuery
     {
         var submissionDetail = _service.Fetch(id, includeAnswers);
         return _mapper.Map<FormSubmissionDetailDto>(submissionDetail);
+    }
+
+    [GraphQLName("generatePreSignedDownloadUrl")]
+    public string GeneratePreSignedDownloadUrl(string fileName)
+    {
+        var key = $"uploads/{fileName}";
+        return _s3Helper.GeneratePreSignedDownloadUrl(key);
     }
 }

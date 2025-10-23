@@ -12,6 +12,7 @@ public static class MutationCollection
         builder.Services.AddScoped<UserMutation>();
         builder.Services.AddScoped<FormMutation>();
         builder.Services.AddScoped<QuestionMutation>();
+        builder.Services.AddScoped<FormSubmissionMutation>();
 
         // Add root mutation type
         builder.AddMutationType<Mutation>();
@@ -21,6 +22,7 @@ public static class MutationCollection
         builder.AddTypeExtension<UserMutation>();
         builder.AddTypeExtension<FormMutation>();
         builder.AddTypeExtension<QuestionMutation>();
+        builder.AddTypeExtension<FormSubmissionMutation>();
 
         return builder;
     }
