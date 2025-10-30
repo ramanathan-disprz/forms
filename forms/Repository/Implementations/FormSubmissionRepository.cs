@@ -20,4 +20,11 @@ public class FormSubmissionRepository : SQLRepository.SQLRepository<FormSubmissi
             .Where(fs => fs.FormId.Equals(formId))
             .ToList();
     }
+
+    public IEnumerable<FormSubmission> IndexByUserId(long userId)
+    {
+        return _context.FormSubmissions
+            .Where(fs => fs.UserId.Equals(userId))
+            .ToList();
+    }
 }

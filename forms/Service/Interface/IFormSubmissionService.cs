@@ -7,6 +7,8 @@ public interface IFormSubmissionService
 {
     IEnumerable<FormSubmission> IndexByFormId(string formId);
 
+    IEnumerable<FormSubmission> IndexByUserId(long userId);
+
     FormSubmissionDetail Fetch(long id, bool includeAnswers);
 
     void SubmitForm(FormSubmissionRequest request);

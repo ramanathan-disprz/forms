@@ -28,6 +28,13 @@ public class FormSubmissionQuery
         return _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
     }
 
+    [GraphQLName("indexFormSubmissionByUserId")]
+    public IEnumerable<FormSubmissionDto> IndexFormSubmissionByUserId(long userId)
+    {
+        var submissions = _service.IndexByUserId(userId);
+        return _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+    }
+
     [GraphQLName("fetchFormSubmission")]
     public FormSubmissionDetailDto FetchFormSubmission(long id, bool includeAnswers = false)
     {

@@ -32,6 +32,12 @@ public class FormSubmissionService : IFormSubmissionService
         return _repository.IndexByFormId(formId);
     }
 
+    public IEnumerable<FormSubmission> IndexByUserId(long userId)
+    {
+        _log.LogInformation("Fetch all form submission with user id: {Id}", userId);
+        return _repository.IndexByUserId(userId);
+    }
+
     public FormSubmissionDetail Fetch(long id, bool includeAnswers = false)
     {
         _log.LogInformation("Fetch form submission with id: {Id}", id);
@@ -84,6 +90,7 @@ public class FormSubmissionService : IFormSubmissionService
             {
                 request.SubmissionId = id;
             }
+
             var answers = _answerService.CreateMany(requests);
         }
         catch (System.Exception ex)
