@@ -5,4 +5,6 @@ namespace forms.Repository.Interfaces;
 
 public interface IFormSubmissionRepository : ISQLRepository<FormSubmission>
 {
+    IEnumerable<FormSubmission> IndexByFormId(string formId);
+    
 }

@@ -13,4 +13,11 @@ public class FormSubmissionRepository : SQLRepository.SQLRepository<FormSubmissi
     {
         _context = context;
     }
+
+    public IEnumerable<FormSubmission> IndexByFormId(string formId)
+    {
+        return _context.FormSubmissions
+            .Where(fs => fs.FormId.Equals(formId))
+            .ToList();
+    }
 }

@@ -30,6 +30,16 @@ public class FormAnswerService : IFormAnswerService
         var answers = _mapper.Map<IEnumerable<FormAnswer>>(requests);
         _log.LogInformation("Create {Count} answers for submission id {id}", answers.Count(),
             answers.First().SubmissionId);
+        foreach (var answer in answers)
+        {
+            answer.GenerateId();
+            if (string.IsNullOrWhiteSpace(answer.ValueJson))
+            {
+                // or "{}" for empty object, or "[]" for empty array
+                answer.ValueJson = null;
+            }
+        }
+
         return _repository.CreateMany(answers);
     }
 }

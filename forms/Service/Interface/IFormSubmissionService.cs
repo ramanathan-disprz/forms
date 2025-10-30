@@ -5,7 +5,9 @@ namespace forms.Service.Interface;
 
 public interface IFormSubmissionService
 {
-    FormSubmissionDetail Fetch(long id,  bool includeAnswers);
+    IEnumerable<FormSubmission> IndexByFormId(string formId);
+
+    FormSubmissionDetail Fetch(long id, bool includeAnswers);
 
     void SubmitForm(FormSubmissionRequest request);
 

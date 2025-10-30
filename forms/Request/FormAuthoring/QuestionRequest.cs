@@ -22,9 +22,9 @@ public class QuestionRequest
     public DateTime? MaxDate { get; set; }
 
     /* File Question */
-    public string[]? AllowedFileTypes { get; set; }
-    public long? MaxFileSizeMB { get; set; }
-    public long? MaxTotalFileSizeMB { get; set; }
+    public string[]? AllowedFileTypes { get; set; } = { ".pdf", ".png", ".jpg", ".jpeg" };
+    public long? MaxFileSizeMB { get; set; } = 2;
+    public long? MaxTotalFileSizeMB { get; set; } = 1;
     public int? MaxFiles { get; set; }
 
     /* Number Question */

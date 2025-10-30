@@ -21,6 +21,13 @@ public class FormSubmissionQuery
         _service = service;
     }
 
+    [GraphQLName("indexFormSubmissionByFormId")]
+    public IEnumerable<FormSubmissionDto> IndexFormSubmissionByFormId(string formId)
+    {
+        var submissions = _service.IndexByFormId(formId);
+        return _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+    }
+
     [GraphQLName("fetchFormSubmission")]
     public FormSubmissionDetailDto FetchFormSubmission(long id, bool includeAnswers = false)
     {

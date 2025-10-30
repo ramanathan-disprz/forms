@@ -26,6 +26,12 @@ public class FormSubmissionService : IFormSubmissionService
         _answerService = answerService;
     }
 
+    public IEnumerable<FormSubmission> IndexByFormId(string formId)
+    {
+        _log.LogInformation("Fetch all form submission with form id: {Id}", formId);
+        return _repository.IndexByFormId(formId);
+    }
+
     public FormSubmissionDetail Fetch(long id, bool includeAnswers = false)
     {
         _log.LogInformation("Fetch form submission with id: {Id}", id);
@@ -70,8 +76,14 @@ public class FormSubmissionService : IFormSubmissionService
         try
         {
             if (requests == null || !requests.Any())
+            {
                 throw new EntitySaveException($"No answers found for the submission {id}");
-            requests.Select(request => request.SubmissionId = id);
+            }
+
+            foreach (var request in requests)
+            {
+                request.SubmissionId = id;
+            }
             var answers = _answerService.CreateMany(requests);
         }
         catch (System.Exception ex)
