@@ -24,8 +24,8 @@ public static class ServiceCollection
         services.AddScoped<IFormAnswerService, FormAnswerService>();
 
         // Mapper
-        services.AddScoped<QuestionMapper>();
-        
+        services.AddScoped<IQuestionMapper, QuestionMapper>();
+
         return services;
     }
 }

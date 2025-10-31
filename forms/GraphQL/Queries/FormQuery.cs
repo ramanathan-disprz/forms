@@ -11,9 +11,9 @@ public class FormQuery
 {
     private readonly IMapper _mapper;
     private readonly IFormService _service;
-    private readonly QuestionMapper _questionMapper;
+    private readonly IQuestionMapper _questionMapper;
 
-    public FormQuery(IMapper mapper, IFormService service, QuestionMapper questionMapper)
+    public FormQuery(IMapper mapper, IFormService service, IQuestionMapper questionMapper)
     {
         _mapper = mapper;
         _service = service;

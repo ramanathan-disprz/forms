@@ -1,4 +1,3 @@
-using AutoMapper;
 using forms.Dto.FormAuthoring;
 using forms.Enum;
 using forms.Model.FormAuthoring;
@@ -8,7 +7,7 @@ using Option = forms.Model.FormAuthoring.Option;
 
 namespace forms.Mapping;
 
-public class QuestionMapper
+public class QuestionMapper : IQuestionMapper
 {
     private readonly IQuestionRepository _repository;
 
@@ -16,7 +15,7 @@ public class QuestionMapper
     {
         _repository = repository;
     }
-    
+
     // Request --> Model
     public Question Map(QuestionRequest request)
     {
@@ -123,7 +122,7 @@ public class QuestionMapper
     {
         return requests.Select(q => Map(q));
     }
-    
+
     // Model --> Dto
     public QuestionDto Map(Question question)
     {
@@ -139,7 +138,7 @@ public class QuestionMapper
                     Placeholder = s.Placeholder,
                     Required = s.Required,
                     Order = s.Order,
-                    
+
                     MaxLength = s.MaxLength
                 }
                 : throw new System.Exception("Invalid question type"),
@@ -154,7 +153,7 @@ public class QuestionMapper
                     Placeholder = l.Placeholder,
                     Required = l.Required,
                     Order = l.Order,
-                    
+
                     MinLength = l.MinLength,
                     MaxLength = l.MaxLength
                 }
@@ -170,7 +169,7 @@ public class QuestionMapper
                     Placeholder = f.Placeholder,
                     Required = f.Required,
                     Order = f.Order,
-                    
+
                     AllowedFileTypes = f.AllowedFileTypes,
                     MaxFileSizeMB = f.MaxFileSizeMB,
                     MaxTotalFileSizeMB = f.MaxTotalFileSizeMB,
@@ -187,7 +186,7 @@ public class QuestionMapper
                     Description = d.Description,
                     Required = d.Required,
                     Order = d.Order,
-                    
+
                     MinDate = d.MinDate,
                     MaxDate = d.MaxDate
                 }
@@ -202,7 +201,7 @@ public class QuestionMapper
                     Description = n.Description,
                     Required = n.Required,
                     Order = n.Order,
-                    
+
                     MinValue = n.MinValue ?? int.MinValue,
                     MaxValue = n.MaxValue ?? int.MaxValue
                 }
@@ -217,7 +216,7 @@ public class QuestionMapper
                     Description = s.Description,
                     Required = s.Required,
                     Order = s.Order,
-                    
+
                     MultiSelect = s.MultiSelect ?? false,
                     Options = s.Options?.Select(o => new OptionDto()
                     {

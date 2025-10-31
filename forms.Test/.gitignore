@@ -1,0 +1,6 @@
+TestResults/
+*.trx
+*.coverage
+coverage.json
+coverage.cobertura.xml
+coverage.opencover.xml

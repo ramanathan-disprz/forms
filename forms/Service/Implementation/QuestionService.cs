@@ -8,11 +8,11 @@ namespace forms.Service.Implementation;
 
 public class QuestionService : IQuestionService
 {
-    private readonly QuestionMapper _questionMapper;
+    private readonly IQuestionMapper _questionMapper;
     private readonly ILogger<QuestionService> _log;
     private readonly IQuestionRepository _repository;
 
-    public QuestionService(QuestionMapper questionMapper,
+    public QuestionService(IQuestionMapper questionMapper,
         ILogger<QuestionService> log, IQuestionRepository repository)
     {
         _questionMapper = questionMapper;

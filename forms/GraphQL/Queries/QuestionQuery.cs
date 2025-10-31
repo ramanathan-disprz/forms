@@ -8,9 +8,9 @@ namespace forms.GraphQL.Queries;
 public class QuestionQuery
 {
     private readonly IQuestionService _service;
-    private readonly QuestionMapper _mapper;
+    private readonly IQuestionMapper _mapper;
 
-    public QuestionQuery(IQuestionService service, QuestionMapper mapper)
+    public QuestionQuery(IQuestionService service, IQuestionMapper mapper)
     {
         _service = service;
         _mapper = mapper;
